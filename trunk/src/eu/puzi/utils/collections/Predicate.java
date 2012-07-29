@@ -5,9 +5,9 @@ public interface Predicate<T> {
 	
 	public class Not<T> implements Predicate<T> {
 		
-		private Predicate<T> predicate;
+		private Predicate<? super T> predicate;
 		
-		public Not(Predicate<T> predicate) {
+		public Not(Predicate<? super T> predicate) {
 			this.predicate = predicate;
 		}
 
@@ -29,15 +29,15 @@ public interface Predicate<T> {
 
 	public class Or<T> implements Predicate<T> {
 		
-		private ArrayIterator<Predicate<T>> predicates;
+		private ArrayIterator<? extends Predicate<? super T>> predicates;
 		
-		public Or(Predicate<T>... predicates) {
-			this.predicates = new ArrayIterator<Predicate<T>>(predicates);
+		public Or(Predicate<? super T>... predicates) {
+			this.predicates = new ArrayIterator<Predicate<? super T>>(predicates);
 		}
 
 		public boolean evaluate(final T object) {
-			return CollectionUtils.findFirst(predicates, new Predicate<Predicate<T>>() {
-				public boolean evaluate(Predicate<T> predicate) {
+			return CollectionUtils.findFirst(predicates, new Predicate<Predicate<? super T>>() {
+				public boolean evaluate(Predicate<? super T> predicate) {
 					return predicate.evaluate(object);
 				}
 			}) != null;
@@ -46,15 +46,15 @@ public interface Predicate<T> {
 
 	public class And<T> implements Predicate<T> {
 		
-		private ArrayIterator<Predicate<T>> predicates;
+		private ArrayIterator<? extends Predicate<? super T>> predicates;
 		
-		public And(Predicate<T>... predicates) {
-			this.predicates = new ArrayIterator<Predicate<T>>(predicates);
+		public And(Predicate<? super  T>... predicates) {
+			this.predicates = new ArrayIterator<Predicate<? super T>>(predicates);
 		}
 
 		public boolean evaluate(final T object) {
-			return CollectionUtils.findFirst(predicates, new Predicate<Predicate<T>>() {
-				public boolean evaluate(Predicate<T> predicate) {
+			return CollectionUtils.findFirst(predicates, new Predicate<Predicate<? super T>>() {
+				public boolean evaluate(Predicate<? super T> predicate) {
 					return !predicate.evaluate(object);
 				}
 			}) == null;

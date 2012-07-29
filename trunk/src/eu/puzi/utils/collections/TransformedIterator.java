@@ -4,10 +4,10 @@ import java.util.Iterator;
 
 public class TransformedIterator<I,O> implements Iterator<O> {
 
-	Transformer<I,O> trans;
-	Iterator<I> iter;
+	Transformer<? super I, ? extends O> trans;
+	Iterator<? extends I> iter;
 	
-	public TransformedIterator(Iterator<I> iter, Transformer<I,O> trans) {
+	public TransformedIterator(Iterator<? extends I> iter, Transformer<? super I, ? extends O> trans) {
 		this.iter = iter;
 		this.trans = trans;
 	}
@@ -17,7 +17,8 @@ public class TransformedIterator<I,O> implements Iterator<O> {
 	}
 
 	public O next() {
-		return trans.transform(iter.next());
+		I in = iter.next();
+		return trans.transform(in);
 	}
 
 	public void remove() {
