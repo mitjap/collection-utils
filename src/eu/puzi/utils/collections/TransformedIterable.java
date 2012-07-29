@@ -4,10 +4,10 @@ import java.util.Iterator;
 
 public class TransformedIterable<I,O> implements Iterable<O> {
 
-	Transformer<I,O> trans;
-	Iterable<I> iter;
+	Transformer<? super I, ? extends O> trans;
+	Iterable<? extends I> iter;
 	
-	public TransformedIterable(Iterable<I> iter, Transformer<I,O> trans) {
+	public TransformedIterable(Iterable<? extends I> iter, Transformer<? super I, ? extends O> trans) {
 		this.iter = iter;
 		this.trans = trans;
 	}

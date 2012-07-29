@@ -4,10 +4,10 @@ import java.util.Iterator;
 
 public class FilteredIterable<E> implements Iterable<E> {
 	
-	private Iterable<E> iterable;
-	private Predicate<E> predicate;
+	private Iterable<? extends E> iterable;
+	private Predicate<? super E> predicate;
 	
-	public FilteredIterable(Iterable<E> iterable, Predicate<E> predicate) {
+	public FilteredIterable(Iterable<? extends E> iterable, Predicate<? super E> predicate) {
 		this.iterable = iterable;
 		this.predicate = predicate;
 	}

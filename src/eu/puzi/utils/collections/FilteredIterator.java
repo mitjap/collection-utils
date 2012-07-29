@@ -4,11 +4,11 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class FilteredIterator<E> implements Iterator<E> {
-	private Iterator<E> iterator;
-	private Predicate<E> predicate;
+	private Iterator<? extends E> iterator;
+	private Predicate<? super E> predicate;
 	private E next;
 	
-	public FilteredIterator(Iterator<E> iterator, Predicate<E> predicate) {
+	public FilteredIterator(Iterator<? extends E> iterator, Predicate<? super E> predicate) {
 		this.iterator = iterator;
 		this.predicate = predicate;
 	}
